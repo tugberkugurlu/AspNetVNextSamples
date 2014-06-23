@@ -1,0 +1,23 @@
+{
+    "version": "0.1-alpha-*",
+    "dependencies": {
+        "Microsoft.AspNet.Http": "0.1-alpha-*",
+        "Microsoft.AspNet.Hosting": "0.1-alpha-*",
+        "Microsoft.AspNet.Server.WebListener": "0.1-alpha-*"
+    },
+    "configurations": {
+        "net45": {
+            "dependencies": {
+            }
+        },
+        
+        "k10": {
+            "dependencies": {
+                "System.Collections": "4.0.0.0",
+                "System.Console": "4.0.0.0",
+                "System.Runtime": "4.0.20.0",
+                "System.Threading.Tasks": "4.0.10.0"
+            }
+        }
+    }
+}
