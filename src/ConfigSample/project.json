@@ -1,0 +1,24 @@
+{
+    "dependencies": {
+        "Microsoft.AspNet.Http": "1.0.0-*",
+        "Microsoft.AspNet.Hosting": "1.0.0-*",
+        "Microsoft.AspNet.Server.WebListener": "1.0.0-*",
+        "Microsoft.Framework.ConfigurationModel": "1.0.0-*"
+    },
+    
+    "commands": {
+        "web": "Microsoft.AspNet.Hosting server=Microsoft.AspNet.Server.WebListener server.urls=http://localhost:5001"
+    },
+    
+    "configrations": {
+        "net45": {},
+        "k10": {
+            "dependencies": {
+                "System.Collections": "4.0.0.0",
+                "System.IO": "4.0.0.0",
+                "System.Linq": "4.0.0.0",
+                "System.Runtime": "4.0.20.0"
+            }
+        }
+    }
+}
