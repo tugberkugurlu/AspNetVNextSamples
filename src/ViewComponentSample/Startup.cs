@@ -9,6 +9,7 @@ namespace ViewComponentSample
         public void Configure(IBuilder app)
         {
             app.UseErrorPage();
+            app.UseFileServer();
             
             app.UseServices(services => 
             {

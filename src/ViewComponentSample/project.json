@@ -4,7 +4,8 @@
         "Microsoft.AspNet.Mvc": "6.0.0-alpha3-*",
         "Microsoft.AspNet.Hosting": "1.0.0-alpha3-*",
         "Microsoft.AspNet.Server.WebListener": "1.0.0-alpha3-*",
-        "Microsoft.AspNet.Diagnostics": "1.0.0-alpha3-10065"
+        "Microsoft.AspNet.Diagnostics": "1.0.0-alpha3-10065",
+        "Microsoft.AspNet.StaticFiles": "1.0.0-alpha3-*"
     },
     
     "commands": { 
