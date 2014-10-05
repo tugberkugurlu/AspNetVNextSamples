@@ -1,30 +1,36 @@
 {
-    "version": "0.1-alpha-*",
+    "version": "1.0.0",
     "dependencies": {
-        "Microsoft.AspNet.Mvc": "6.0.0-alpha3-*",
-        "Microsoft.AspNet.Hosting": "1.0.0-alpha3-*",
-        "Microsoft.AspNet.Server.WebListener": "1.0.0-alpha3-*",
-        "Microsoft.AspNet.Diagnostics": "1.0.0-alpha3-10065",
-        "Microsoft.AspNet.StaticFiles": "1.0.0-alpha3-*"
+        "Microsoft.AspNet.Diagnostics": "1.0.0-*",
+        "Microsoft.AspNet.StaticFiles": "1.0.0-*",
+        "Microsoft.AspNet.Mvc": "6.0.0-*",
+        "Microsoft.AspNet.Mvc.Core": "6.0.0-*",
+        "Microsoft.AspNet.Http": "1.0.0-*",
+        "Microsoft.AspNet.Mvc.Razor": "6.0.0-*",
+        "Microsoft.AspNet.Hosting": "1.0.0-*",
+        "Microsoft.AspNet.Server.WebListener": "1.0.0-*",
+        "Microsoft.Framework.ConfigurationModel": "1.0.0-*",
+        "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-*",
+        "Microsoft.Framework.DependencyInjection": "1.0.0-*",
+        "Microsoft.AspNet.RequestContainer": "1.0.0-*"
     },
     
     "commands": { 
-        "web": "Microsoft.AspNet.Hosting server=Microsoft.AspNet.Server.WebListener server.urls=http://localhost:5001" 
+        "web": "Microsoft.AspNet.Hosting server=Microsoft.AspNet.Server.WebListener server.urls=http://localhost:5001"
     },
     
     "configurations": {
-        "net45": {
-            "dependencies": {
-            }
+        "aspnet50": {
         },
-        
-        "k10": {
-            "dependencies": {
-                "System.Collections": "4.0.0.0",
-                "System.Console": "4.0.0.0",
-                "System.Runtime": "4.0.20.0",
-                "System.Threading.Tasks": "4.0.10.0"
-            }
+        "aspnetcore50": {
+          "dependencies": {
+            "System.Collections": "4.0.0.0",
+            "System.Console": "4.0.0.0",
+            "System.IO": "4.0.0.0",
+            "System.Linq": "4.0.0.0",
+            "System.Runtime": "4.0.20.0",
+            "System.Threading.Tasks": "4.0.10.0"
+          }
         }
     }
 }

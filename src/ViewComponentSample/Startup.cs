@@ -6,7 +6,7 @@ namespace ViewComponentSample
 {
     public class Startup 
     {
-        public void Configure(IBuilder app)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseErrorPage();
             app.UseFileServer();
@@ -14,14 +14,12 @@ namespace ViewComponentSample
             app.UseServices(services => 
             {
                 services.AddMvc();
+                services.AddScoped<IProfileLinkManager, ProfileLinkManager>();
             });
             
             app.UseMvc(routes => 
             {
-                routes.MapRoute(
-                    "controllerActionRoute",
-                    "{controller}/{action}",
-                    new { controller = "Home", action = "Index" });
+                routes.MapRoute("defaultRoute", "{controller=Home}/{action=Index}");
             });
         }
     }

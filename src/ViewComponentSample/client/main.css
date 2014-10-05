@@ -1,0 +1,13 @@
+ul.profilelink-list {
+
+    margin: 0;
+    padding: 0;
+}
+
+ul.profilelink-list li {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    margin-bottom: 5px;
+    display: inline-block;
+}

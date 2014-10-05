@@ -1,0 +1,9 @@
+@using ViewComponentSample
+@model IEnumerable<ProfileLink>
+
+<ul class="profilelink-list">
+    @foreach(ProfileLink profileLink in Model)
+    {
+        <li><a class="btn btn-info" title="@profileLink.Name" href="@profileLink.Url"><i class="fa fa-@(profileLink.FaName) fa-lg"></i></a></li>
+    }
+</ul>

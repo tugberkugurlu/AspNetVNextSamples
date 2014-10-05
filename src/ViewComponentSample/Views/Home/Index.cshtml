@@ -1,8 +1,21 @@
-@{
-    Layout = "/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Home Page";
-}
-
-<div>
-    <strong>Foo Bar...</strong>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Component Sample</title>
+    <link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/client/main.css" />
+</head>
+<body>
+    <div class="col-md-8" ng-app="mainApp">
+        <hr />
+        <div>
+            Main section...
+        </div>
+    </div>
+    <div class="col-md-4">
+        <hr />
+        @await Component.InvokeAsync("ProfileLinks")
+    </div>
+</body>
+</html>
