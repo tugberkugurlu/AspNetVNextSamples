@@ -5,8 +5,9 @@ using Microsoft.Framework.Logging;
 using Microsoft.Framework.Logging.Console;
 using System;
 
+// http://stackoverflow.com/questions/17108027/nlog-how-to-output-nested-diagnostics-context-value-to-a-log-file
 namespace LoggingSample
-{
+{   
     public static class Constants 
     {
         public const string LoggerName = "LoggingSample";
