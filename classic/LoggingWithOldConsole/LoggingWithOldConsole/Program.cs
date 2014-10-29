@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Framework.Logging;
+using Microsoft.Framework.Logging.Console;
 
 namespace LoggingWithOldConsole
 {
@@ -9,6 +10,8 @@ namespace LoggingWithOldConsole
         {
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(new DiagnosticsLoggerProvider());
+            loggerFactory.AddConsole();
+
             FooManager manager = new FooManager(loggerFactory);
             manager.Run();
         }
