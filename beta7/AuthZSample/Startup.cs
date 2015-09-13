@@ -28,7 +28,7 @@ namespace AuthZSample
 
         // This method gets called by the runtime.
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
             // Add MVC services to the services container.
             services.AddMvc();
          
@@ -96,5 +96,7 @@ namespace AuthZSample
     
     // 3-) After doing services.ConfigureAuthorization, UseStaticFiles thing is returning 404 for all static files.
     
-    // 4-) Q: What is the diff between AddAuthorization and ConfigureAuthorization? 
+    // 4-) Q: What is the diff between AddAuthorization and ConfigureAuthorization?
+    //     A?: Could be https://github.com/aspnet/Security/blob/0f06b6a09a38d8027e1d181a07dbbe26ce36517e/src/Microsoft.AspNet.Authorization/ServiceCollectionExtensions.cs#L16
+    //         it could be something which is being invoked by hosting stuff.
 }
