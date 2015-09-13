@@ -1,3 +1,4 @@
+using Microsoft.AspNet.Authentication.Cookies;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Dnx.Runtime;
@@ -7,6 +8,11 @@ using Microsoft.Framework.Logging;
 
 namespace AuthZSample
 {
+    public static class Constants 
+    {
+        public const string WebsiteReadPolicy = "web-app-read";
+    } 
+    
     public class Startup
     {
         public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
@@ -22,13 +28,19 @@ namespace AuthZSample
 
         // This method gets called by the runtime.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {            
             // Add MVC services to the services container.
             services.AddMvc();
-
-            // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
-            // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
-            // services.AddWebApiConventions();
+         
+            services.ConfigureAuthorization(authzOptions => 
+            {
+                authzOptions.AddPolicy(Constants.WebsiteReadPolicy, policy => 
+                {
+                    policy.ActiveAuthenticationSchemes.Add(CookieAuthenticationDefaults.AuthenticationScheme);
+                    policy.RequireClaim(System.Security.Claims.ClaimTypes.NameIdentifier);
+                    policy.RequireClaim("scope", "read");
+                });
+            });
         }
 
         // Configure is called after ConfigureServices is called.
@@ -37,9 +49,9 @@ namespace AuthZSample
             loggerFactory.MinimumLevel = LogLevel.Information;
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
-
+        
             // Configure the HTTP request pipeline.
-
+        
             // Add the following to the request pipeline only in development environment.
             if (env.IsDevelopment())
             {
@@ -51,7 +63,9 @@ namespace AuthZSample
                 // send the request to the following path or controller action.
                 app.UseErrorHandler("/Home/Error");
             }
-
+            
+            app.UseCookieAuthentication();
+            
             // Add static files to the request pipeline.
             app.UseStaticFiles();
 
@@ -61,10 +75,26 @@ namespace AuthZSample
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
-                // Uncomment the following line to add a route for porting Web API 2 controllers.
-                // routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
             });
         }
     }
+    
+    // see: https://github.com/aspnet/Mvc/tree/85bb33a62a06fe8767d2df1c519a1cab78e7c9d1/test/WebSites/FiltersWebSite
+    // see: https://github.com/aspnet/Mvc/blob/85bb33a62a06fe8767d2df1c519a1cab78e7c9d1/test/WebSites/FiltersWebSite/Startup.cs
+    
+    // Notes:
+    
+    // 1-) When you configure authz policy and try to protect a controller or action with
+    //     AuthorizeAttribute, you will get "InvalidOperationException: The following authentication scheme was not accepted: {name-of-the-schema}"
+    //     if you don't have an auth handler to handle that schema. This work is being done by 
+    //     https://github.com/aspnet/HttpAbstractions/blob/67803d2f419c067cc9043ad26173bceea2467d89/src/Microsoft.AspNet.Http/Authentication/DefaultAuthenticationManager.cs by default.
+    //     In above case, we have app.UseCookieAuthentication(); and policy.ActiveAuthenticationSchemes.Add(CookieAuthenticationDefaults.AuthenticationScheme);
+    //     to make it work nicely. 
+    //     refer: http://stackoverflow.com/questions/31998052/asp-net-5-oauthbearerauthentication-the-following-authentication-scheme-was-not
+    
+    // 2-) Cookies auth redirects by default to your login page which is Account/Login?ReturnUrl={stuff}
+    
+    // 3-) After doing services.ConfigureAuthorization, UseStaticFiles thing is returning 404 for all static files.
+    
+    // 4-) Q: What is the diff between AddAuthorization and ConfigureAuthorization? 
 }
