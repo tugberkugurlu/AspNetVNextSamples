@@ -5,13 +5,14 @@ using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
+using Microsoft.AspNet.Http;
 
 namespace AuthZSample
 {
     public static class Constants 
     {
         public const string WebsiteReadPolicy = "web-app-read";
-    } 
+    }
     
     public class Startup
     {
@@ -64,7 +65,10 @@ namespace AuthZSample
                 app.UseErrorHandler("/Home/Error");
             }
             
-            app.UseCookieAuthentication();
+            app.UseCookieAuthentication(options => 
+            {
+                options.LoginPath = new PathString("/membership/login");
+            });
             
             // Add static files to the request pipeline.
             app.UseStaticFiles();

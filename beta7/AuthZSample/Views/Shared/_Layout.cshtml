@@ -37,10 +37,21 @@
                         <li><a asp-controller="Home" asp-action="About">About</a></li>
                         <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
                     </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <ul class="nav navbar-right">
+                            <li>
+                                <a href="#"><i class="glyphicon glyphicon-user"></i> @User.Identity.Name</a>
+                            </li>
+                        </ul>   
+                    }
                 </div>
             </div>
         </div>
         <div class="container body-content">
+            <div>
+                Is User Authenticated? @User.Identity.IsAuthenticated
+            </div>
             @RenderBody()
             <hr />
             <footer>
