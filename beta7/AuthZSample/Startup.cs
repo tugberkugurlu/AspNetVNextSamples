@@ -6,12 +6,14 @@ using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Authorization;
 
 namespace AuthZSample
 {
     public static class Constants 
     {
         public const string WebsiteReadPolicy = "web-app-read";
+        public const string WebsiteWritePolicy = "web-app-write";
     }
     
     public class Startup
@@ -35,11 +37,20 @@ namespace AuthZSample
          
             services.ConfigureAuthorization(authzOptions => 
             {
+                var defaultPolicy = new AuthorizationPolicyBuilder(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .RequireClaim(System.Security.Claims.ClaimTypes.NameIdentifier)
+                    .Build();
+                
                 authzOptions.AddPolicy(Constants.WebsiteReadPolicy, policy => 
                 {
-                    policy.ActiveAuthenticationSchemes.Add(CookieAuthenticationDefaults.AuthenticationScheme);
-                    policy.RequireClaim(System.Security.Claims.ClaimTypes.NameIdentifier);
+                    policy.Combine(defaultPolicy);
                     policy.RequireClaim("scope", "read");
+                });
+                
+                authzOptions.AddPolicy(Constants.WebsiteWritePolicy, policy => 
+                {   
+                    policy.Combine(defaultPolicy);
+                    policy.RequireClaim("scope", "write");
                 });
             });
         }
@@ -68,6 +79,7 @@ namespace AuthZSample
             app.UseCookieAuthentication(options => 
             {
                 options.LoginPath = new PathString("/membership/login");
+                options.AccessDeniedPath = new PathString("/membership/noaccess");
                 
                 // refer to: https://twitter.com/PinpointTownes/status/643748141561458688
                 options.AutomaticAuthentication = true;

@@ -18,6 +18,7 @@ namespace AuthZSample.Controllers
             return View();
         }
 
+        [Authorize(Constants.WebsiteWritePolicy)]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";

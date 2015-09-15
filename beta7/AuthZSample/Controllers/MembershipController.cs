@@ -19,6 +19,12 @@ namespace AuthZSample.Controllers
             return View();
         }
         
+        [HttpGet]
+        public ActionResult NoAccess()
+        {
+            return View();
+        }
+        
         /// <remarks>
         /// Refer here for a sample: https://github.com/aspnet/Security/blob/e8090a3176de5e6fc84be829be3a98f1e5ee8a5d/samples/CookieSample/Startup.cs
         /// </remarks>
