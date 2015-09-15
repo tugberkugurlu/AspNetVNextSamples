@@ -68,6 +68,9 @@ namespace AuthZSample
             app.UseCookieAuthentication(options => 
             {
                 options.LoginPath = new PathString("/membership/login");
+                
+                // refer to: https://twitter.com/PinpointTownes/status/643748141561458688
+                options.AutomaticAuthentication = true;
             });
             
             // Add static files to the request pipeline.
