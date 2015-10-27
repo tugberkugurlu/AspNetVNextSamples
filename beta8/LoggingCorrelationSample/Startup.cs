@@ -12,7 +12,7 @@ namespace LoggingCorrelationSample
 		{
 			var serilogLogger = new LoggerConfiguration()
 				.WriteTo
-				.TextWriter(Console.Out, outputTemplate: "{RequestId}: {Message}{NewLine}")
+				.TextWriter(Console.Out)
 				.MinimumLevel.Verbose()
 				.CreateLogger();
 				
