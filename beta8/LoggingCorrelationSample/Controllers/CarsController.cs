@@ -16,17 +16,17 @@ namespace LoggingCorrelationSample
         }
 
         public IEnumerable<string> GetCars()
-		{
-			_logger.LogInformation("Found 3 cars.");
-			
-			return new[]
+        {
+            _logger.LogInformation("Found 3 cars.");
+
+            return new[]
             {
                 "Car 1",
                 "Car 2",
                 "Car 3"
             };
-		}
-        
+        }
+
         public void Dispose()
         {
             _logger.LogDebug("Disposing CarsContext");
@@ -35,13 +35,13 @@ namespace LoggingCorrelationSample
 
     public class CarsController : Controller
     {
-		private readonly CarsContext _carsContext;
-		
-		public CarsController(CarsContext carsContext)
-		{
-			 _carsContext = carsContext;
-		}
-		
+        private readonly CarsContext _carsContext;
+
+        public CarsController(CarsContext carsContext)
+        {
+            _carsContext = carsContext;
+        }
+
         [Route("cars")]
         public IActionResult Get()
         {
