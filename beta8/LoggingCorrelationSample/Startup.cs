@@ -1,7 +1,9 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Http.Features;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Serilog;
@@ -15,6 +17,9 @@ namespace LoggingCorrelationSample
             var serilogLogger = new LoggerConfiguration()
                 .WriteTo
                 .TextWriter(Console.Out)
+#if DNX452
+                .WriteTo.Elasticsearch()
+#endif
                 .MinimumLevel.Verbose()
                 .CreateLogger();
 
@@ -30,6 +35,7 @@ namespace LoggingCorrelationSample
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseMiddleware<RequestIdMiddleware>();
             app.UseMiddleware<RequestUrlLoggerMiddleware>();
             app.UseMvc();
         }
@@ -50,6 +56,27 @@ namespace LoggingCorrelationSample
         {
             _logger.LogInformation("{Method}: {Url}", context.Request.Method, context.Request.Path);
             return _next(context);
+        }
+    }
+    
+    public class RequestIdMiddleware
+    {
+        private readonly RequestDelegate _next;
+
+        public RequestIdMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
+
+        public async Task Invoke(HttpContext context)
+        {
+            var requestIdFeature = context.Features.Get<IHttpRequestIdentifierFeature>();
+            if (requestIdFeature?.TraceIdentifier != null)
+            {
+                context.Response.Headers["RequestId"] = requestIdFeature.TraceIdentifier;
+            }
+
+            await _next(context);
         }
     }
 }

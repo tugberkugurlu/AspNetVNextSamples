@@ -6,7 +6,8 @@
 		"Microsoft.AspNet.Server.Kestrel": "1.0.0-beta8",
 		"Microsoft.AspNet.Mvc": "6.0.0-beta8",
 		"Microsoft.AspNet.StaticFiles": "1.0.0-beta8",
-		"Serilog.Framework.Logging": "1.0.0-beta8-10065"
+		"Serilog.Framework.Logging": "1.0.0-beta8-10065",
+		"Serilog.Sinks.ElasticSearch": "2.0.60"
 	},
 	
 	"commands": {
