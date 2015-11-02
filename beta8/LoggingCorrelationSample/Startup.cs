@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
@@ -18,6 +17,9 @@ namespace LoggingCorrelationSample
                 .WriteTo
                 .TextWriter(Console.Out)
 #if DNX452
+                .Enrich.WithThreadId()
+                .Enrich.WithProcessId()
+                .Enrich.WithMachineName()
                 .WriteTo.Elasticsearch()
 #endif
                 .MinimumLevel.Verbose()
@@ -40,25 +42,25 @@ namespace LoggingCorrelationSample
             app.UseMvc();
         }
     }
-    
-    public class RequestUrlLoggerMiddleware 
+
+    public class RequestUrlLoggerMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly Microsoft.Framework.Logging.ILogger _logger;
-        
-        public RequestUrlLoggerMiddleware(RequestDelegate next, ILoggerFactory loggerFactory) 
+
+        public RequestUrlLoggerMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
             _next = next;
             _logger = loggerFactory.CreateLogger<RequestUrlLoggerMiddleware>();
         }
-        
+
         public Task Invoke (HttpContext context)
         {
             _logger.LogInformation("{Method}: {Url}", context.Request.Method, context.Request.Path);
             return _next(context);
         }
     }
-    
+
     public class RequestIdMiddleware
     {
         private readonly RequestDelegate _next;
