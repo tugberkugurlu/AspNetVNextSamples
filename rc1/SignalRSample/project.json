@@ -1,0 +1,38 @@
+{
+	"version": "1.0.0",
+	"dependencies": {
+		"Microsoft.AspNet.Http": "1.0.0-rc1-final",
+		"Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
+		"Microsoft.Extensions.DependencyInjection": "1.0.0-rc1-final",
+		"Microsoft.AspNet.Owin": "1.0.0-rc1-final",
+		"Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+		"Microsoft.AspNet.Hosting": "1.0.0-rc1-final"
+	},
+	"frameworks": {
+		"dnx451": {
+			"dependencies": {
+				"Microsoft.AspNet.SignalR.Core": "2.2.0",
+				"Microsoft.AspNet.SignalR.Owin": "1.2.2"
+			}
+		}
+	},
+	
+	"commands": {
+		"web": "Microsoft.AspNet.Hosting --config hosting.json"
+	},
+	
+	"publishExclude": [
+		"node_modules",
+		"bower_components",
+		"**.xproj",
+		"**.user",
+		"**.vspscc"
+	],
+	"exclude": [
+		"wwwroot",
+		"node_modules",
+		"bower_components"
+	],
+	
+	"webroot": "wwwroot"
+}
