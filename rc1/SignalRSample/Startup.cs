@@ -9,29 +9,29 @@ using Owin;
 
 namespace SignalRSample
 {
-	public class Startup 
-	{
+    public class Startup
+    {
         public void ConfigureServices(IServiceCollection services)
         {
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseStaticFiles();            
-            app.UseOwin(addToPipeline => 
+            app.UseStaticFiles();
+            app.UseOwin(addToPipeline =>
             {
-                addToPipeline(next => 
+                addToPipeline(next =>
                 {
                     var builder = new AppBuilder();
                     var hubConfig = new HubConfiguration { EnableDetailedErrors = true };
-                    
+
                     builder.MapSignalR(hubConfig);
-                    
+
                     var appFunc = builder.Build(typeof(Func<IDictionary<string, object>, Task>)) as Func<IDictionary<string, object>, Task>;
-                    
+
                     return appFunc;
-                }); 
+                });
             });
         }
-	}
+    }
 }
