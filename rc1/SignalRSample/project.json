@@ -16,11 +16,9 @@
 			}
 		}
 	},
-	
 	"commands": {
 		"web": "Microsoft.AspNet.Hosting --config hosting.json"
 	},
-	
 	"publishExclude": [
 		"node_modules",
 		"bower_components",
@@ -33,6 +31,5 @@
 		"node_modules",
 		"bower_components"
 	],
-	
 	"webroot": "wwwroot"
 }
